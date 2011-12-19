@@ -1,0 +1,41 @@
+
+a simple GUI tool for workflow process view related experiments.
+
+workflow lab, SIST, Sun Yat-Sen University
+
+
+#################### .wfm file format ####################
+
+1. File Type Description
+
+    .wfm file is a simple plain-text formated file for describing a workflow model. Only decided for workflow process view research and experimental usage.
+    
+2. Text Format
+    .wfm is process and interpret row by row. The core concept of infomation block is 'section'.
+	
+    1) section
+        Section begins with #BEGIN and ends with #END.
+
+    2) section type
+        TOPO: The topology of the workflow model, mapping to a directed graph.
+        ATTR: The attribute data of an activity in the workflow model.
+
+    3) TOPO section format
+        
+        #BEGIN TOPO n
+        t11, t12, t13, ...
+        t21, t22, t23, ...
+        #END
+
+        n: The number of activities in the workflow model, the activities are numbered from 1 to n(including).
+        below are n rows, the i-th row has j integer, each indicates that there is a dependency (directed path) from activity i pointing to activity j.
+
+    4) ATTR section format
+
+        #BEGIN ATTR m
+        key val
+        ...
+        #END
+
+        m: The number of the activity.
+        key val: This line attaches an attribute named 'key' with an value 'val' to the activity m in the workflow model.
