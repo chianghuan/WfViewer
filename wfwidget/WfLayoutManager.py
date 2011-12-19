@@ -34,8 +34,8 @@ class WfLayoutManager:
         
         self.activities = []
         for i in range(len(self.wfm[0])):
-            randx = random.randint(1, self.maxx)
-            randy = random.randint(1, self.maxy) #TODO
+            randx = random.randint(self.maxx/3, self.maxx*2/3)
+            randy = random.randint(self.maxy/3, self.maxy*2/3) 
             self.activities += [WfActivity(randx, randy)]
 
         self.dependencies = []

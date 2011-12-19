@@ -1,4 +1,6 @@
 class WfActivity:
+    x = 0.0
+    y = 0.0
     def __init__(self, x, y, width=0, height=0):
         self.x=x
         self.y=y
@@ -28,4 +30,3 @@ class WfActivity:
 
     def getW(self):
         return (self.x, self.y+WfActivity.height/2)
-

@@ -1,14 +1,18 @@
 from Tkinter import *
 from WfActivity import *
+from WfLayoutManager import *
 
 class WfCanvas(Frame):
     def __init__(self, master=None, width=1500, height=1024,
-            maxx=1500, maxy=1024):
+            maxx=1500, maxy=1024, layout = None, wfm=None):
         """Initialize the WfCanvas object.
 
         with width and height(painting region).
         """
         Frame.__init__(self, master)
+
+        self.__layoutManager = layout
+        self.__wfm = wfm
 
         self.width = width
         self.height = height
@@ -51,6 +55,10 @@ class WfCanvas(Frame):
         self.canvas.bind("<Button-1>", self.__mouseDownHandler)
         self.canvas.bind("<ButtonRelease-1>", self.__mouseUpHandler)
 
+    def setWfm(wfm):
+        self.__wfm = wfm
+        self.__layoutManager.setWfm(self.__wfm)
+
     def setActivitySize(self, width=10, height=10):
         WfActivity.width = width
         WfActivity.height = height
@@ -58,19 +66,32 @@ class WfCanvas(Frame):
     def setLineSize(self, sz=3):
         self.linesz=sz
 
-    def drawWf(self, activities, dependencies):
+    def setLayout(self, layout):
+        self.__layoutManager = layout
+
+    def drawWf(self, wfm=None):
         """Draw the wf model."""
+        if wfm != None:
+            self.__wfm = wfm
+        if self.__layoutManager == None:
+            print "## no layout specified"
+            self.__layoutManager = WfLayoutManager(
+                    maxx=self.maxx, maxy=self.maxy)
+        self.__layoutManager.setWfm(self.__wfm)
+
+        activities = self.__layoutManager.activities
+        dependencies = self.__layoutManager.dependencies
+
         self.__acts = {} 
         self.__depen = []
-        for act in activities:
-            a = self.drawActivity(act)
-            self.__acts[a] = act
-        for depen in dependencies:
-            d = self.drawDependency(depen[0], depen[1])
-            self.__depen.append([d, depen[0], depen[1]])
-
-        # for test only
-        # self.moveActivity(self.__acts.keys()[3], 0, 0)
+        if activities != None:
+            for act in activities:
+                a = self.drawActivity(act)
+                self.__acts[a] = act
+        if dependencies != None:
+            for depen in dependencies:
+                d = self.drawDependency(depen[0], depen[1])
+                self.__depen.append([d, depen[0], depen[1]])
 
     def drawGrid(self, gridx, gridy):
         """Draw the cavas background grid."""
@@ -119,6 +140,14 @@ class WfCanvas(Frame):
 
     def moveActivity(self, aid, tx, ty):
         a = None
+        if tx > self.maxx:
+            tx = self.maxx - 100
+        if ty > self.maxy:
+            ty = self.maxy - 100
+        if tx < 0:
+            tx = 0
+        if ty < 0:
+            ty = 0
         if aid in self.__acts.keys():
             a = self.__acts[aid]
             dx = tx - a.x
