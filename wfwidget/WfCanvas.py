@@ -63,7 +63,7 @@ class WfCanvas(Frame):
         WfActivity.width = width
         WfActivity.height = height
 
-    def setLineSize(self, sz=3):
+    def setLineSize(self, sz=1):
         self.linesz=sz
 
     def setLayout(self, layout):
@@ -111,7 +111,7 @@ class WfCanvas(Frame):
                 activity.x, activity.y,
                 activity.x+WfActivity.width,
                 activity.y+WfActivity.height,
-                fill="grey")
+                fill=activity.color)
 
     def drawDependency(self, fromAct, toAct):
         ret = None

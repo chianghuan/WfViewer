@@ -33,10 +33,20 @@ class WfLayoutManager:
             return (self.activities, self.dependencies)
         
         self.activities = []
-        for i in range(len(self.wfm[0])):
+        sz = len(self.wfm[0])
+        for i in range(sz):
             randx = random.randint(self.maxx/3, self.maxx*2/3)
             randy = random.randint(self.maxy/3, self.maxy*2/3) 
-            self.activities += [WfActivity(randx, randy)]
+            color = "grey"
+            if i == 0:
+                randx = self.maxx/6
+                randy = self.maxy/2
+                color = "red"
+            elif i == sz-1:
+                randx = self.maxx*5/6
+                randy = self.maxy/2
+                color = "green"
+            self.activities += [WfActivity(randx, randy, color=color)]
 
         self.dependencies = []
         wfm = self.wfm

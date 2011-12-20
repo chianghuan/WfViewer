@@ -20,7 +20,9 @@ class WfElasticLayout(WfLayoutManager):
 
     def __converge(self):
         morefix = False 
-        for act in self.activities:
+        for i in range(1, len(self.activities)-1):
+            act = self.activities[i]
+        #for act in self.activities:
             vx = 0.0
             vy = 0.0
             """calc push power"""

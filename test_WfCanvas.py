@@ -21,7 +21,7 @@ if __name__ == "__main__":
     app.master.tittle="Test WfCanvas"
 
     wfm = wfmObjectFromFile("wfm/sample.wfm")
-    layoutMan = WfElasticLayout(maxx=800, maxy=600,
+    layoutMan = WfElasticLayout(maxx=1280, maxy=768,
             actwidth=20, actheight=20)
     app.setLayout(layoutMan)
         

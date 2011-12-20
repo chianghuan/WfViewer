@@ -13,7 +13,8 @@ def usage():
     print "\n\t By huanchiang@gmail.com SIST sun-yat-sen university"
 
 def generateMatrix(n, acyc=False):
-    mat = [[random.randint(0, 3) for i in range(n)] for j in range(n)]
+    mat = [[random.randint(0, 3) for j in range(n)] for i in range(n)]
+    """ node 0 is source and node n-1 is the converge"""
     for i in range(n):
         mat[i][0] = 1
         mat[n-1][i] = 1
