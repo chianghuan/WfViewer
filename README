@@ -25,9 +25,10 @@ workflow lab, SIST, Sun Yat-Sen University
         #BEGIN TOPO n
         t11, t12, t13, ...
         t21, t22, t23, ...
+        ...
         #END
 
-        n: The number of activities in the workflow model, the activities are numbered from 1 to n(including).
+        n: The number of activities in the workflow model, the activities are numbered from 0 to n-1(including).
         below are n rows, the i-th row has j integer, each indicates that there is a dependency (directed path) from activity i pointing to activity j.
 
     4) ATTR section format
@@ -39,3 +40,14 @@ workflow lab, SIST, Sun Yat-Sen University
 
         m: The number of the activity.
         key val: This line attaches an attribute named 'key' with an value 'val' to the activity m in the workflow model.
+
+    5) PROJ section format
+    
+        #BEGIN PROJ n
+        t11, t12, t13, ...
+        t21, t22, ...
+        ...
+        #END
+
+        n: THe number of activities in the workflow view corresbonding to the model, numbered from 0 to n-1(including).
+        below are n rows, the i-th row indicates that there's a projection vi -> (ti1, ti2, ...), vi is the the i-th activity of the view, and t is the number of the activity of the origin model.

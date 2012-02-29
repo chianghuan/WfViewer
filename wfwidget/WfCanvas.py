@@ -2,14 +2,16 @@ from Tkinter import *
 from WfActivity import *
 from WfLayoutManager import *
 
-class WfCanvas(Frame):
-    def __init__(self, master=None, width=1500, height=1024,
-            maxx=1500, maxy=1024, layout = None, wfm=None):
+class WfCanvas(Canvas):
+    def __init__(self, master=None, width=1024, height=768,
+            maxx=1500, maxy=1024, layout = None, wfm=None, ctype="MODEL"):
         """Initialize the WfCanvas object.
 
         with width and height(painting region).
         """
-        Frame.__init__(self, master)
+        self.master=master
+        self.__type=ctype
+        Canvas.__init__(self, master)
 
         self.__layoutManager = layout
         self.__wfm = wfm
@@ -21,10 +23,6 @@ class WfCanvas(Frame):
 
         self.setActivitySize()
         self.setLineSize()
-
-        top=self.winfo_toplevel()
-        top.rowconfigure(0, weight=1)
-        top.columnconfigure(0, weight=1)
 
         self.grid(sticky=N+E+S+W)
         self.rowconfigure(0, weight=1)
@@ -51,6 +49,7 @@ class WfCanvas(Frame):
 
         self.canvas["bg"] = "white"
 
+        self.__last_res = -1
         self.__movingActivity = None
         self.canvas.bind("<Button-1>", self.__mouseDownHandler)
         self.canvas.bind("<ButtonRelease-1>", self.__mouseUpHandler)
@@ -73,6 +72,9 @@ class WfCanvas(Frame):
         """Draw the wf model."""
         if wfm != None:
             self.__wfm = wfm
+        else:
+            return
+
         if self.__layoutManager == None:
             print "## no layout specified"
             self.__layoutManager = WfLayoutManager(
@@ -87,6 +89,7 @@ class WfCanvas(Frame):
         if activities != None:
             for act in activities:
                 a = self.drawActivity(act)
+#                print "act id: ", a
                 self.__acts[a] = act
         if dependencies != None:
             for depen in dependencies:
@@ -100,18 +103,22 @@ class WfCanvas(Frame):
             count += 1
             self.canvas.create_line(
                     x, 0,
-                    x, self.maxy)
+                    x, self.maxy,
+                    tags="GRID")
             for y in range(0, self.maxy, gridy):
                 self.canvas.create_line(
                         x, y+(count%2)*gridy/2,
-                        x+gridx, y+(count%2)*gridy/2)
+                        x+gridx, y+(count%2)*gridy/2,
+                        tags="GRID")
 
     def drawActivity(self, activity):
-        return self.canvas.create_rectangle(
+        objid = self.canvas.create_rectangle(
                 activity.x, activity.y,
                 activity.x+WfActivity.width,
                 activity.y+WfActivity.height,
-                fill=activity.color)
+                fill=activity.color,
+                tags=["ACT","aid=%d" %activity.aid])
+        return objid
 
     def drawDependency(self, fromAct, toAct):
         ret = None
@@ -138,6 +145,20 @@ class WfCanvas(Frame):
                 arrow=LAST, width=self.linesz)
         return ret
 
+    def highlight(self, act_list):
+        for aid in act_list:
+            a = self.canvas.find_withtag("aid=%d" %aid)
+            self.canvas.itemconfigure(a[0], fill="yellow")
+            self.canvas.addtag_withtag("HL", "aid=%d" %aid)
+
+    def highlightoff(self):
+        for a in self.canvas.find_withtag("HL"):
+#            print a
+            self.canvas.itemconfigure(a, fill="grey")
+        self.canvas.dtag("HL", "HL")
+#        for a in self.canvas.find_withtag("HL"):
+#            print "##### still have", a
+
     def moveActivity(self, aid, tx, ty):
         a = None
         if tx > self.maxx:
@@ -161,17 +182,66 @@ class WfCanvas(Frame):
                     dep[0]=self.drawDependency(dep[1], dep[2])
 
     def __mouseDownHandler(self, event):
+        if self.__type=="MODEL":
+            self.__modelMouseDownHandler(event)
+        else:
+            self.__viewMouseDownHandler(event)
+
+    def __modelMouseDownHandler(self, event):
         x = self.canvas.canvasx(event.x)
         y = self.canvas.canvasy(event.y)
+        self.__last_action_x = x
+        self.__last_action_y = y
+#        if self.__last_res != -1:
+#            self.canvas.itemconfigure(self.__last_res, fill="grey")
         res = self.canvas.find_overlapping(x, y, x, y)
-        if len(res) != 0:
+        if len(res) != 0 and ("ACT" in self.canvas.gettags(res[0])):
+#            print res[0]  #DEBUG
+#            print self.__acts[res[0]].aid
+            self.__last_res = res[0]
+#            self.canvas.itemconfigure(res[0], fill="yellow")
+#            self.highlight([self.__acts[res[0]].aid])
+            self.master.displayInfo(self.__acts[res[0]].aid)
             self.__movingActivity = res[0]
         else:
             self.__movingActivity = None
+            self.master.removeInfo()
+
+    def __viewMouseDownHandler(self, event):
+        self.master.highlightoff()
+        x = self.canvas.canvasx(event.x)
+        y = self.canvas.canvasy(event.y)
+        self.__last_action_x = x
+        self.__last_action_y = y
+        if self.__last_res != -1:
+            self.canvas.itemconfigure(self.__last_res, fill="grey")
+        res = self.canvas.find_overlapping(x, y, x, y)
+        if len(res) != 0 and ("ACT" in self.canvas.gettags(res[0])):
+            self.__last_res = res[0]
+            self.canvas.itemconfigure(res[0], fill="yellow")
+            aid = self.__acts[res[0]].aid
+#            print "###", aid
+#            print "###", self.__wfm[3][aid]
+            self.master.displayViewActInfo(aid,
+                    self.__wfm[3][aid])
+            self.__movingActivity = res[0]
+        else:
+            self.__movingActivity = None
+            self.master.removeInfo()
 
     def __mouseUpHandler(self, event):
         x = self.canvas.canvasx(event.x)
         y = self.canvas.canvasy(event.y)
         if self.__movingActivity != None and \
-        self.__movingActivity in self.__acts.keys():
+        self.__movingActivity in self.__acts.keys() and \
+        ( abs(self.__last_action_x - x) > 5 or abs(self.__last_action_y - y) > 5 ):
             self.moveActivity(self.__movingActivity, x, y)
+            self.__last_action_x = x
+            self.__last_action_y = y
+
+    def clear(self):
+        self.__wfm = None
+        self.__acts = {} 
+        self.__depen = []
+        for i in self.canvas.find_all():
+            self.canvas.delete(i)

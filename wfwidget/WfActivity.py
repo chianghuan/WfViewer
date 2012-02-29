@@ -1,10 +1,12 @@
 class WfActivity:
     x = 0.0
     y = 0.0
-    def __init__(self, x, y, width=0, height=0, color="grey"):
+    aid = -1
+    def __init__(self, x, y, aid, width=0, height=0, color="grey"):
         self.x=x
         self.y=y
         self.color=color
+        self.aid=aid
 
     def setArttribute(self, **attr):
         self.attributes=attr

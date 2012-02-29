@@ -46,7 +46,7 @@ class WfLayoutManager:
                 randx = self.maxx*5/6
                 randy = self.maxy/2
                 color = "green"
-            self.activities += [WfActivity(randx, randy, color=color)]
+            self.activities += [WfActivity(randx, randy, i, color=color)]
 
         self.dependencies = []
         wfm = self.wfm
