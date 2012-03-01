@@ -5,7 +5,6 @@ class WfElasticLayout(WfLayoutManager):
     
         ref to: http://doc.qt.nokia.com/4.7/graphicsview-elasticnodes.html
     """
-    #TODO have to make the magic varies according to (maxx, maxy) 
     def __init__(self, wfm=None, maxx=1280, maxy=1024,
             actwidth=10, actheight=10):
         WfLayoutManager.__init__(self, wfm, maxx, maxy,
@@ -29,12 +28,12 @@ class WfElasticLayout(WfLayoutManager):
             for tac in self.activities:
                 dx = act.x - tac.x
                 dy = act.y - tac.y
-                l = (dx*dx+dy*dy)*2 # It's a magic!
+                l = (dx*dx+dy*dy)*2 # It's a magic! XXX
                 if l>0 :
                     vx += dx*150/l
-                    vy += dy*150/l # another magic!
+                    vy += dy*150/l # another magic! XXX
             
-            weight = (len(self.dependencies)+1)*10 # magic again!
+            weight = (len(self.dependencies)+1)*10 # magic again! XXX
             """calc pull power"""
             for dep in self.dependencies:
                 if dep[0] == act or dep[1] == act:
