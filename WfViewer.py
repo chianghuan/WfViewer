@@ -20,6 +20,7 @@ from WfmFromFile import *
 from WfmFromProj import *
 
 from Soundness import *
+from LocalOptCorrect import *
 
 class WfViewer(Frame):
     def __init__(self, master=None, width=1100, height=600):
@@ -158,7 +159,9 @@ class WfViewer(Frame):
                 "%s.\nUnsound view nodes are: %s" %(prompt,str(unsoundNodes)))
 
     def __weakCorrect(self):
-        pass #TODO
+        print "### weak correct"
+        new_view = weakOptimalCorrect(self.wfm)
+        self.refreshView(new_view)
 
     def __strongCorrect(self):
         pass #TODO
