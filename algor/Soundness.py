@@ -6,6 +6,7 @@ def isViewSound(graph, attr, isMatrix, proj):
     ret = True
     for i, subset in enumerate(proj):
         if False == isViewNodeSound(graph, isMatrix, subset):
+            print 'unsound', i
             unsound.append(i)
             ret = False
     return ret, unsound
@@ -15,16 +16,17 @@ def isViewNodeSound(graph, isMatrix, subset):
     if isMatrix == False:
         mat = getMatrixFromLnk(graph)
     inset, outset = getInOutSet(mat, subset)
- 
+    # floyd 
     for k in subset:
         for i in subset:
             for j in subset:
-                if mat[i][k] == 1 and mat[k][j] == 1:
+                if i == j or (mat[i][k] == 1 and mat[k][j] == 1):
                     mat[i][j] = 1
-
+    # check un-reachable
     for i in inset:
         for j in outset:
             if mat[i][j] != 1:
+                print 'unreachable', i, j
                 return False
             
 def getInOutSet(mat, subset):
@@ -37,5 +39,4 @@ def getInOutSet(mat, subset):
                     inset.add(j)
                 if j in subset and mat[j][i] == 1:
                     outset.add(j)
-
     return inset, outset

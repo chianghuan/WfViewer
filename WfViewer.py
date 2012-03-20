@@ -21,6 +21,7 @@ from WfmFromProj import *
 
 from Soundness import *
 from LocalOptCorrect import *
+from ExtAndComb import *
 
 class WfViewer(Frame):
     def __init__(self, master=None, width=1100, height=600):
@@ -80,14 +81,15 @@ class WfViewer(Frame):
         self.info_panel.delete(0, END)
         self.info_panel.insert(END, ("*VID", "%d" %act_id))
 
-        for i in act_list:
-            self.info_panel.insert(END, ("*id:%d" %i, ""))
-            d = dict()
-            for key, val in self.wfm[1].items():
-                if key[0] == i:
-                    d[key[1]]=val
-            for keyval in d.items():
-                self.info_panel.insert(END, keyval)
+        if act_list != None:
+            for i in act_list:
+                self.info_panel.insert(END, ("*id:%d" %i, ""))
+                d = dict()
+                for key, val in self.wfm[1].items():
+                    if key[0] == i:
+                        d[key[1]]=val
+                for keyval in d.items():
+                    self.info_panel.insert(END, keyval)
         
         self.model_canvas.highlightoff()
         self.model_canvas.highlight(act_list)
@@ -106,6 +108,7 @@ class WfViewer(Frame):
         self.view = None
         self.view_canvas.clear()
         self.view = view
+        self.wfm = (self.wfm[0], self.wfm[1], self.wfm[2], self.view[3])
         self.view_canvas.drawWf(self.view)
 
     def removeInfo(self):
@@ -145,6 +148,7 @@ class WfViewer(Frame):
         self.algorithms_menu.add_command(label="Check soundness", command=self.__checkSoundness)
         self.algorithms_menu.add_command(label="Weakly local-opt correct", command=self.__weakCorrect)
         self.algorithms_menu.add_command(label="Strong local-opt correct", command=self.__strongCorrect)
+        self.algorithms_menu.add_command(label="Extend and combine", command=self.__extendAndComb)
 
     def __checkSoundness(self):
         if self.wfm == None:
@@ -153,11 +157,12 @@ class WfViewer(Frame):
         isSound, unsoundNodes = isViewSound(*(self.wfm))
         if isSound:
             prompt = "The view is SOUND"
+            tkMessageBox.showinfo('Check view soundness', prompt)
         else:
             prompt = "The view is NOT SOUND"
-        tkMessageBox.showinfo('Check view soundness', 
+            tkMessageBox.showinfo('Check view soundness', \
                 "%s.\nUnsound view nodes are: %s" %(prompt,str(unsoundNodes)))
-
+    
     def __weakCorrect(self):
         print "### weak correct"
         new_view = weakOptimalCorrect(self.wfm)
@@ -165,6 +170,11 @@ class WfViewer(Frame):
 
     def __strongCorrect(self):
         pass #TODO
+
+    def __extendAndComb(self):
+        print "### extend and combine"
+        new_view = extAndComb(self.wfm)
+        self.refreshView(new_view)
 
     def __openHandler(self):
         filename = tkFileDialog.askopenfilename(defaultextension=".wfm",
