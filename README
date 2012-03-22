@@ -19,6 +19,7 @@ workflow lab, SIST, Sun Yat-Sen University
     2) section type
         TOPO: The topology of the workflow model, mapping to a directed graph.
         ATTR: The attribute data of an activity in the workflow model.
+		PROJ: The projection from model to view.
 
     3) TOPO section format
         
@@ -29,7 +30,7 @@ workflow lab, SIST, Sun Yat-Sen University
         #END
 
         n: The number of activities in the workflow model, the activities are numbered from 0 to n-1(including).
-        below are n rows, the i-th row has j integer, each indicates that there is a dependency (directed path) from activity i pointing to activity j.
+        below are n rows, the i-th row has j integers: j_1, j_2... , each j_k indicates that there is a dependency (directed path) from activity i-1 to activity j_k.
 
     4) ATTR section format
 

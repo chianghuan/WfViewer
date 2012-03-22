@@ -16,7 +16,6 @@ def extAndComb(graph):
 
     while True:
         # since there is still change
-        debugOut(gt)
         if len(gt) <= 3:
             break
         retset = None
@@ -30,16 +29,12 @@ def extAndComb(graph):
         # get merge set
         ret = [ x for x in retset]
         ret.sort()
-        print 'here we find sth for ', ret
-        print '*****joining', ret[0], ':', resproj[ret[0]]
         for i in range(1, len(ret)):
             # combine the combinable nodes
             resproj[ret[0]] = resproj[ret[0]] + resproj[ret[i]]
-            print '*****joining', ret[i], ':', resproj[ret[i]]
         for i in range(len(ret) - 1, 0, -1):
             # delete the combined nodes
             del resproj[ret[i]]
-        print 'now proj', resproj
         gt, attr, isMatrix, proj = wfmObjectFromProj((g, None, True, resproj), True)
 
     return wfmObjectFromProj((g, attr, True, resproj), True)
@@ -48,12 +43,10 @@ def extend(gm, st):
     n = len(gm)
     ret = None
     # extend the simple linear structure
-    print 'extending', st
     if gm[st][1:n-1].count(1) == 1:
         # if st has only one out-degree (except to END)
         tar = gm[st][1:n-1].index(1) + 1
         if st != tar:
-            print 'single out degree', st, tar
             return set([st, tar]) 
     for i in range(1, n - 1):
         # for each edge (st, i)
@@ -61,7 +54,6 @@ def extend(gm, st):
             tmp = [gm[x][i] for x in range(n)]
             if tmp[1:n-1].count(1) == 1 and st != i:
                 #if i has only one in-degree (except from SRC)
-                print 'single in degree', st, i
                 return set([st, i])
     # try to extend a complete bipartite structure
     ret = spread(gm, st)
@@ -101,8 +93,6 @@ def spread(gm, st):
                 elif gm[i][po] == 1 and i != po and markin[i] == 0:
                     q.put((i, True))
                     markin[i] = 1
-    print 'inset', inset
-    print 'outset', outset
     # check if all in can go to all out
     fine = checkFine(gm, inset, outset)
     # if yes, return set
@@ -124,12 +114,9 @@ def checkFine(gm, inset, outset):
                 if i == j or gm[i][j] == 1 \
                         or (gm[i][k] == 1 and gm[k][j] == 1):
                     gt[i][j] = 1
-    print 'GT is here!!!!!!!!!!!!'
-    debugOut(gt)
     for i in inset:
         for j in outset:
             if gt[i][j] == 0:
-                print 'not connected', i, j
                 return False
     return True
 

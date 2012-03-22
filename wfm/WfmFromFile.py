@@ -65,5 +65,5 @@ def wfmObjectFromFile(fpath, matrix=False):
         return (lnk, attr, False, proj)
 
 if __name__ == "__main__":
-    print wfmObjectFromFile("./sample.wfm", True)
+    print wfmObjectFromFile("../data/sample.wfm", True)
 

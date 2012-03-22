@@ -17,7 +17,9 @@ from WfMultiListbox import *
 
 from WfElasticLayout import *
 from WfmFromFile import *
+from WfmFromXML import *
 from WfmFromProj import *
+from SaveWfmToFile import *
 
 from Soundness import *
 from LocalOptCorrect import *
@@ -178,7 +180,7 @@ class WfViewer(Frame):
 
     def __openHandler(self):
         filename = tkFileDialog.askopenfilename(defaultextension=".wfm",
-                filetypes=[("workflow model file", "*.wfm"), ("other", "*.*")])
+                filetypes=[("workflow model file", "*.wfm | *.xml"), ("other", "*.*")])
         if filename == None or filename.strip() == "":
             return
         # clean up
@@ -187,24 +189,33 @@ class WfViewer(Frame):
         self.model_canvas.clear()
         self.view_canvas.clear()
         # add new 
-        self.wfm = wfmObjectFromFile(filename)
+        if filename[-4:].lower() == '.wfm':
+            self.wfm = wfmObjectFromFile(filename)
+        else:
+            self.wfm = wfmObjectFromXML(filename)
         self.view = wfmObjectFromProj(self.wfm)
         self.model_canvas.drawWf(self.wfm)
         self.view_canvas.drawWf(self.view)
 
     def __saveHandler(self):
+        if self.wfm == None:
+            return
         filename = tkFileDialog.asksaveasfilename(defaultextension=".wfm", 
                 filetypes=[("workflow model file", "*.wfm"), ("other", "*.*")])
-        if filename == None or filename.strip() == '':
+        filename = filename.strip()
+        if filename == None or filename == '':
             return
-        pass #TODO 
+        wfmObjectToFile(filename, self.wfm)
 
     def __saveViewHandler(self):
+        if self.wfm == None or self.wfm[3] == None:
+            return
         filename = tkFileDialog.asksaveasfilename(defaultextension=".wfm", 
                 filetypes=[("workflow model file", "*.wfm"), ("other", "*.*")])
-        if filename == None or filename.strip() == '':
+        filename = filename.strip()
+        if filename == None or filename == '':
             return
-        pass #TODO
+        wfmObjectToFile(filename, (None, None, True, self.wfm[3]))
  
     def __viewOnHandler(self):
         if self.__view_cb.get() == 1:

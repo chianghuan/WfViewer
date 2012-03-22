@@ -50,7 +50,7 @@ if __name__ == "__main__" :
     opts, args = getopt.getopt(sys.argv[2:], "AhT:")
 
     acyc = False
-    tpath = "./sample.wfm"
+    tpath = "../data/generated.wfm"
 
     for op, val in opts:
         if op == "-A":

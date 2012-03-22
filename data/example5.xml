@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<WORKFLOWS>
+  <WORKFLOW>
+    <STEPCLASSES>
+      <STEPCLASS id="2175" isUserInput="true" isUserOutput="false" name="2175" />
+      <STEPCLASS id="2176" isUserInput="true" isUserOutput="false" name="2176" />
+      <STEPCLASS id="2177" isUserInput="false" isUserOutput="false" name="2177" />
+      <STEPCLASS id="4177" isUserInput="true" isUserOutput="false" name="4177" />
+      <STEPCLASS id="4179" isUserInput="true" isUserOutput="false" name="4179" />
+      <STEPCLASS id="4181" isUserInput="false" isUserOutput="false" name="4181" />
+      <STEPCLASS id="21142" isUserInput="false" isUserOutput="false" name="21142" />
+      <STEPCLASS id="21145" isUserInput="false" isUserOutput="false" name="21145" />
+      <STEPCLASS id="32170" isUserInput="false" isUserOutput="false" name="32170" />
+      <STEPCLASS id="32174" isUserInput="false" isUserOutput="false" name="32174" />
+      <STEPCLASS id="32178" isUserInput="false" isUserOutput="false" name="32178" />
+      <STEPCLASS id="5174" isUserInput="false" isUserOutput="false" name="5174" />
+      <STEPCLASS id="5179" isUserInput="false" isUserOutput="false" name="5179" />
+      <STEPCLASS id="5184" isUserInput="false" isUserOutput="false" name="5184" />
+      <STEPCLASS id="12148" isUserInput="false" isUserOutput="false" name="12148" />
+      <STEPCLASS id="12154" isUserInput="false" isUserOutput="false" name="12154" />
+      <STEPCLASS id="12160" isUserInput="false" isUserOutput="false" name="12160" />
+      <STEPCLASS id="28182" isUserInput="false" isUserOutput="false" name="28182" />
+      <STEPCLASS id="28189" isUserInput="false" isUserOutput="false" name="28189" />
+      <STEPCLASS id="28196" isUserInput="false" isUserOutput="false" name="28196" />
+      <STEPCLASS id="28203" isUserInput="false" isUserOutput="false" name="28203" />
+      <STEPCLASS id="24168" isUserInput="false" isUserOutput="false" name="24168" />
+      <STEPCLASS id="24176" isUserInput="false" isUserOutput="false" name="24176" />
+      <STEPCLASS id="24184" isUserInput="false" isUserOutput="false" name="24184" />
+      <STEPCLASS id="24192" isUserInput="false" isUserOutput="false" name="24192" />
+      <STEPCLASS id="9121" isUserInput="false" isUserOutput="false" name="9121" />
+      <STEPCLASS id="9130" isUserInput="false" isUserOutput="false" name="9130" />
+      <STEPCLASS id="9139" isUserInput="false" isUserOutput="true" name="9139" />
+      <STEPCLASS id="70138" isUserInput="false" isUserOutput="false" name="70138" />
+      <STEPCLASS id="70148" isUserInput="false" isUserOutput="false" name="70148" />
+      <STEPCLASS id="88175" isUserInput="false" isUserOutput="false" name="88175" />
+      <STEPCLASS id="88186" isUserInput="false" isUserOutput="false" name="88186" />
+      <STEPCLASS id="88197" isUserInput="false" isUserOutput="true" name="88197" />
+      <STEPCLASS id="72173" isUserInput="false" isUserOutput="false" name="72173" />
+      <STEPCLASS id="72185" isUserInput="false" isUserOutput="false" name="72185" />
+      <STEPCLASS id="72197" isUserInput="false" isUserOutput="false" name="72197" />
+      <STEPCLASS id="72209" isUserInput="false" isUserOutput="false" name="72209" />
+      <STEPCLASS id="13160" isUserInput="false" isUserOutput="false" name="13160" />
+      <STEPCLASS id="13173" isUserInput="false" isUserOutput="true" name="13173" />
+      <STEPCLASS id="13186" isUserInput="false" isUserOutput="true" name="13186" />
+      <STEPCLASS id="14134" isUserInput="false" isUserOutput="false" name="14134" />
+      <STEPCLASS id="14148" isUserInput="false" isUserOutput="true" name="14148" />
+      <STEPCLASS id="14162" isUserInput="false" isUserOutput="false" name="14162" />
+      <STEPCLASS id="120166" isUserInput="false" isUserOutput="false" name="120166" />
+      <STEPCLASS id="120181" isUserInput="false" isUserOutput="false" name="120181" />
+      <STEPCLASS id="120196" isUserInput="false" isUserOutput="true" name="120196" />
+      <STEPCLASS id="128150" isUserInput="false" isUserOutput="false" name="128150" />
+      <STEPCLASS id="128166" isUserInput="false" isUserOutput="false" name="128166" />
+      <STEPCLASS id="128182" isUserInput="false" isUserOutput="true" name="128182" />
+    </STEPCLASSES>
+    <RELATIONS>
+      <RELATION start="2175" stop="2177" />
+      <RELATION start="2176" stop="2177" />
+      <RELATION start="4177" stop="4181" />
+      <RELATION start="4179" stop="4181" />
+      <RELATION start="21142" stop="21145" />
+      <RELATION start="32170" stop="32174" />
+      <RELATION start="32174" stop="32178" />
+      <RELATION start="5174" stop="5179" />
+      <RELATION start="5174" stop="5184" />
+      <RELATION start="12148" stop="12160" />
+      <RELATION start="12154" stop="12160" />
+      <RELATION start="28182" stop="28189" />
+      <RELATION start="28182" stop="28203" />
+      <RELATION start="28196" stop="28189" />
+      <RELATION start="28196" stop="28203" />
+      <RELATION start="24168" stop="24176" />
+      <RELATION start="24168" stop="24192" />
+      <RELATION start="24184" stop="24176" />
+      <RELATION start="24184" stop="24192" />
+      <RELATION start="9121" stop="9130" />
+      <RELATION start="9121" stop="9139" />
+      <RELATION start="70138" stop="70148" />
+      <RELATION start="88175" stop="88186" />
+      <RELATION start="88186" stop="88197" />
+      <RELATION start="72173" stop="72185" />
+      <RELATION start="72197" stop="72209" />
+      <RELATION start="13160" stop="13173" />
+      <RELATION start="13160" stop="13186" />
+      <RELATION start="14134" stop="14148" />
+      <RELATION start="14134" stop="14162" />
+      <RELATION start="120166" stop="120181" />
+      <RELATION start="120181" stop="120196" />
+      <RELATION start="128150" stop="128166" />
+      <RELATION start="128166" stop="128182" />
+      <RELATION start="2177" stop="21142" />
+      <RELATION start="4181" stop="32170" />
+      <RELATION start="21145" stop="5174" />
+      <RELATION start="32178" stop="12148" />
+      <RELATION start="5179" stop="12154" />
+      <RELATION start="5184" stop="28182" />
+      <RELATION start="5184" stop="28196" />
+      <RELATION start="28182" stop="24168" />
+      <RELATION start="28189" stop="24184" />
+      <RELATION start="24176" stop="9121" />
+      <RELATION start="12160" stop="70138" />
+      <RELATION start="24192" stop="88175" />
+      <RELATION start="70148" stop="72173" />
+      <RELATION start="28203" stop="72197" />
+      <RELATION start="9130" stop="13160" />
+      <RELATION start="72185" stop="14134" />
+      <RELATION start="72209" stop="120166" />
+      <RELATION start="14162" stop="128150" />
+    </RELATIONS>
+    <USERVIEWS>
+    </USERVIEWS>
+  </WORKFLOW>
+</WORKFLOWS>
