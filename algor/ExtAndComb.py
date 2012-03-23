@@ -43,16 +43,18 @@ def extend(gm, st):
     n = len(gm)
     ret = None
     # extend the simple linear structure
-    if gm[st][1:n-1].count(1) == 1:
+    gm[st][st] = 0
+    if gm[st].count(1) == 1:
         # if st has only one out-degree (except to END)
-        tar = gm[st][1:n-1].index(1) + 1
-        if st != tar:
+        tar = gm[st].index(1)
+        if st != tar and tar != n-1:
             return set([st, tar]) 
     for i in range(1, n - 1):
         # for each edge (st, i)
         if gm[st][i] == 1 and i != st:
             tmp = [gm[x][i] for x in range(n)]
-            if tmp[1:n-1].count(1) == 1 and st != i:
+            tmp[i] = 0
+            if tmp.count(1) == 1:
                 #if i has only one in-degree (except from SRC)
                 return set([st, i])
     # try to extend a complete bipartite structure

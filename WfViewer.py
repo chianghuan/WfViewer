@@ -1,4 +1,4 @@
-#!/usr/bin/python27
+#!/usr/bin/python27 -u
 
 import sys
 import tkFileDialog
@@ -154,6 +154,9 @@ class WfViewer(Frame):
 
     def __checkSoundness(self):
         if self.wfm == None:
+            tkMessageBox.showerror('ERROR', 'No view is loaded')
+            return
+        if self.wfm[3] == None:
             tkMessageBox.showerror('ERROR', 'No view is loaded')
             return
         isSound, unsoundNodes = isViewSound(*(self.wfm))
