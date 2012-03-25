@@ -218,7 +218,7 @@ class WfViewer(Frame):
         filename = filename.strip()
         if filename == None or filename == '':
             return
-        wfmObjectToFile(filename, (None, None, True, self.wfm[3]))
+        wfmObjectToFile(filename, (self.view[0], None, True, None)) 
  
     def __viewOnHandler(self):
         if self.__view_cb.get() == 1:
