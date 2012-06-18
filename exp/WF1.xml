@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<WORKFLOWS>
+  <WORKFLOW>
+    <STEPCLASSES>
+      <STEPCLASS id="7087" isUserInput="true" isUserOutput="false" name="7087" />
+      <STEPCLASS id="7088" isUserInput="false" isUserOutput="false" name="7088" />
+      <STEPCLASS id="6144" isUserInput="true" isUserOutput="false" name="6144" />
+      <STEPCLASS id="6146" isUserInput="false" isUserOutput="false" name="6146" />
+      <STEPCLASS id="6148" isUserInput="true" isUserOutput="false" name="6148" />
+      <STEPCLASS id="6150" isUserInput="false" isUserOutput="true" name="6150" />
+      <STEPCLASS id="9203" isUserInput="false" isUserOutput="false" name="9203" />
+      <STEPCLASS id="9206" isUserInput="false" isUserOutput="true" name="9206" />
+      <STEPCLASS id="9209" isUserInput="false" isUserOutput="false" name="9209" />
+      <STEPCLASS id="9212" isUserInput="false" isUserOutput="true" name="9212" />
+    </STEPCLASSES>
+    <RELATIONS>
+      <RELATION start="7087" stop="7088" />
+      <RELATION start="6144" stop="6146" />
+      <RELATION start="6144" stop="6150" />
+      <RELATION start="6148" stop="6146" />
+      <RELATION start="6148" stop="6150" />
+      <RELATION start="9203" stop="9206" />
+      <RELATION start="9203" stop="9212" />
+      <RELATION start="9209" stop="9206" />
+      <RELATION start="9209" stop="9212" />
+      <RELATION start="7088" stop="9203" />
+      <RELATION start="6146" stop="9209" />
+    </RELATIONS>
+    <USERVIEWS>
+    </USERVIEWS>
+  </WORKFLOW>
+</WORKFLOWS>

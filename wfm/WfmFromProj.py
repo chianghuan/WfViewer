@@ -15,12 +15,16 @@ def wfmObjectFromProj(wfm, matrix=False):
     mat=[[0 for i in range(m)] for j in range(m)]
     for i in range(m):
         for j in range(m):
+            if i == j:
+                continue
             k=0
             if wfm[2]==True: # matrix
                 for p in wfm[3][i]:
                     if k == 1:
                         break
                     for q in range(n):
+                        if p == q:
+                            continue
                         if k == 1:
                             break
                         if wfm[0][p][q]==1 and \
@@ -31,6 +35,8 @@ def wfmObjectFromProj(wfm, matrix=False):
                     if k == 1:
                         break
                     for q in wfm[0][p]:
+                        if p == q:
+                            continue
                         if k == 1:
                             break
                         if q in wfm[3][j]:

@@ -4,12 +4,63 @@ from GraphTran import *
 from Queue import *
 from copy import *
 
-def extAndComb(graph):
-    if graph == None:
-        return
+def back(g, v, mk, li, num, cur):
+    mk[v] = 1
+    cur.add(v)
+    for u in range(len(g)):
+        if mk[u] == -1 and g[u][v] == 1:
+            num = back(g, u, mk, li, num, cur)
+    return num
+
+def dfs(g, u, mk, li, num):
+    mk[u] = 1
+    for v in range(len(g)):
+        if mk[v] == -1 and g[u][v] == 1:
+            num = dfs(g, v, mk, li, num)
+    num = num - 1
+    li[num] = u
+    return num
+
+def mergeSCC(graph):
     g, attr, isMatrix, proj = graph
     if isMatrix == False:
         g = getMatrixFromLnk(g)
+    isMatrix = True
+
+    li = [-1 for i in range(len(g)+1)]
+    num = len(g) + 1
+    mk = [-1 for i in range(len(g))]
+    for i in range(len(g)):
+        if mk[i] == -1:
+            num = dfs(g, i, mk, li, num)
+    mk = [-1 for i in range(len(g))]
+
+    setli = []
+    setli += [set()]
+    curp = 0
+    cur = setli[curp]
+
+    for i in range(len(g)):
+        if mk[li[i+1]] == -1:
+            num = back(g, li[i+1], mk, li, num, cur)
+            curp = curp + 1
+            setli += [set()]
+            cur = setli[curp]
+            
+    #TODO merge SCC
+
+    return (g, attr, isMatrix, proj)
+
+def extAndComb(graph):
+    if graph == None:
+        return
+
+    graph = mergeSCC(graph)
+
+    g, attr, isMatrix, proj = graph
+    if isMatrix == False:
+        g = getMatrixFromLnk(g)
+
     gt = copy(g)
 
     resproj = [[x] for x in range(0, len(g))]
@@ -18,11 +69,11 @@ def extAndComb(graph):
         # since there is still change
         if len(gt) <= 3:
             break
-        retset = None
+        retset = rettmp = None
         for i in range(1, len(gt) - 1):
-            retset = extend(gt, i)
-            if retset != None:
-                break
+            rettmp = extend(gt, i)
+            if retset == None or (rettmp != None and len(rettmp) > len(retset)):
+                retset = rettmp
         if retset == None:
             # no change
             break
@@ -41,14 +92,15 @@ def extAndComb(graph):
 
 def extend(gm, st):
     n = len(gm)
-    ret = None
+    mx = 0
+    ret = rettmp = None
     # extend the simple linear structure
     gm[st][st] = 0
     if gm[st].count(1) == 1:
         # if st has only one out-degree (except to END)
         tar = gm[st].index(1)
         if st != tar and tar != n-1:
-            return set([st, tar]) 
+            ret = set([st, tar]) 
     for i in range(1, n - 1):
         # for each edge (st, i)
         if gm[st][i] == 1 and i != st:
@@ -56,9 +108,12 @@ def extend(gm, st):
             tmp[i] = 0
             if tmp.count(1) == 1:
                 #if i has only one in-degree (except from SRC)
-                return set([st, i])
+                ret = set([st, i])
+                break
     # try to extend a complete bipartite structure
-    ret = spread(gm, st)
+    rettmp = spread(gm, st)
+    if rettmp != None:
+        return rettmp
     return ret
 
 def spread(gm, st):

@@ -1,0 +1,32 @@
+#BEGIN TOPO 10
+1 4
+2 3
+5
+9
+6
+7
+8
+8
+9
+
+#END
+#BEGIN ATTR
+0 Name input
+1 Name fetch_seqs_from_ensembi
+2 Name write_fasta_file
+3 Name ensembi_ouput_fasta_file
+4 Name get_sequence_file_name
+5 Name create_formatdb_cmd_args
+6 Name create_blastall_cmd_args
+7 Name local_create_blastdb
+8 Name run_blast_search
+9 Name output
+#END
+#BEGIN PROJ 6
+0
+1
+2 3 5 7
+4 6
+8
+9
+#END
